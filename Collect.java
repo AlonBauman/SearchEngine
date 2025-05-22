@@ -1,0 +1,36 @@
+package prog11;
+
+import prog02.GUI;
+import java.util.*;
+
+public class Collect {
+  public static void main(String[] args) {
+    Browser browser = new BetterBrowser();
+    SearchEngine notGPT = new Newgle();
+
+    List<String> startingURLs = new ArrayList<String>();
+    startingURLs.add("http://www.cs.miami.edu/home/vjm/csc220/google/mary.html");
+    //startingURLs.add("http://www.cs.miami.edu/home/vjm/csc220/google2/1.html");
+
+    List<String> temp = new ArrayList<String>();
+    for (int i = 0; i < startingURLs.size(); i++) {
+      temp.add(BetterBrowser.reversePathURL(startingURLs.get(i)));
+    }
+    startingURLs = temp;
+
+    notGPT.collect(browser, startingURLs);
+
+    Newgle g = (Newgle) notGPT;
+    System.out.println("map from URL to page index");
+    System.out.println(g.urlToIndex);
+    System.out.println("map from page index to page file");
+    System.out.println(g.pageDisk);
+    System.out.println("map from word to word index");
+    System.out.println(g.wordToIndex);
+    System.out.println("map from word index to word file");
+    System.out.println(g.wordDisk);
+
+    g.pageDisk.write("pagedisk.txt");
+    g.wordDisk.write("worddisk.txt");
+  }
+}
